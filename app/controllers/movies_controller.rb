@@ -2,8 +2,11 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: %i[ show edit update destroy ]
 
   # GET /movies or /movies.json
+  # Sort Movie DB by sort_column and sort_direction upon GET
   def index
-    @movies = Movie.all
+    @movies = Movie.order(sort_column + ' ' + sort_direction)
+    @sort_column = sort_column
+    @sort_direction = sort_direction
   end
 
   # GET /movies/1 or /movies/1.json
@@ -66,5 +69,15 @@ class MoviesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def movie_params
       params.require(:movie).permit(:title, :rating, :description, :release_date)
+    end
+
+    # Check params for sort column, with title as default
+    def sort_column
+      Movie.column_names.include?(params[:sort]) ? params[:sort] : "title"
+    end
+    
+    # Check params for sort direction, with asc as default
+    def sort_direction
+      ['asc','desc'].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

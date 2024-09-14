@@ -1,10 +1,22 @@
 <p style="color: green"><%= notice %></p>
+<h1> Show Movie </h1>
 
+<table>
+  <tr>
+    <td> Title </td>
+    <td> Rating </td>
+    <td> Description </td>
+    <td> Release Date </td>
+    <td> </td>
+  </tr>
 <%= render @movie %>
-
-<div>
-  <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
+</table>
+<div class="buttonbox">
+  <button>
+  <%= link_to "Edit this movie", edit_movie_path(@movie) %>
+  </button>
+  <button>
   <%= link_to "Back to movies", movies_path %>
-
+  </button>
   <%= button_to "Destroy this movie", @movie, method: :delete %>
 </div>
