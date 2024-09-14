@@ -1,7 +1,7 @@
 module ApplicationHelper
   
-  def sortable(column, title)
-    # Reverse sort direction on click
+  # Generate links, where sort_column goes to the opposite direction
+  def genLinks(column, title)
     if column == @sort_column
       direction = @sort_direction == 'desc' ? 'asc' : 'desc'
       title += @sort_direction == 'desc' ? ' ↓' : ' ↑'
@@ -14,7 +14,7 @@ module ApplicationHelper
     if column != @sort_column
       return 
     end
-    @sort_direction == 'desc' ? 'desc' : 'asc'
+    @sort_direction
   end
 
 end

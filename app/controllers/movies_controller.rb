@@ -4,9 +4,16 @@ class MoviesController < ApplicationController
   # GET /movies or /movies.json
   # Sort Movie DB by sort_column and sort_direction upon GET
   def index
-    @movies = Movie.order(sort_column + ' ' + sort_direction)
     @sort_column = sort_column
     @sort_direction = sort_direction
+    @movies = Movie.order(@sort_column + ' ' + @sort_direction)
+    
+    # Record column and direction to session, so that we can recover later
+    # @sort_direction gives the link to the sort direction
+    # So the current direction to restore is the opposite of @sort_direction
+    session[:sort] = @sort_column
+    session[:direction] = @sort_direction == 'asc' ? 'desc' : 'asc'
+    
   end
 
   # GET /movies/1 or /movies/1.json
@@ -71,13 +78,25 @@ class MoviesController < ApplicationController
       params.require(:movie).permit(:title, :rating, :description, :release_date)
     end
 
-    # Check params for sort column, with title as default
+    # Check for sort column, with title as default
     def sort_column
-      Movie.column_names.include?(params[:sort]) ? params[:sort] : "title"
+      if Movie.column_names.include?(params[:sort])
+        params[:sort]
+      elsif Movie.column_names.include?(session[:sort])
+        session[:sort]
+      else
+        "title"
+      end
     end
     
     # Check params for sort direction, with asc as default
     def sort_direction
-      ['asc','desc'].include?(params[:direction]) ? params[:direction] : "asc"
+      if ['asc','desc'].include?(params[:direction]) 
+        params[:direction]
+      elsif ['asc', 'desc'].include?(session[:direction])
+        session[:direction]
+      else
+        "asc"
+      end
     end
 end

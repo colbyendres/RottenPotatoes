@@ -7,10 +7,10 @@
 
 <table id="movies">
   <thead>
-    <th class=<%=bg_color "title"%>> <%= sortable "title", "Title"%></th>
-    <th class=<%=bg_color "rating"%>> <%= sortable "rating", "Rating"%> </th>
-    <th class=<%=bg_color "description"%>> <%= sortable "description", "Description"%> </th>
-    <th class=<%=bg_color "release_date"%>> <%= sortable "release_date", "Release Date"%> </th>
+    <th class=<%=bg_color "title"%>> <%= genLinks "title", "Title"%></th>
+    <th class=<%=bg_color "rating"%>> <%= genLinks "rating", "Rating"%> </th>
+    <th class=<%=bg_color "description"%>> <%= genLinks "description", "Description"%> </th>
+    <th class=<%=bg_color "release_date"%>> <%= genLinks "release_date", "Release Date"%> </th>
     <th> </th>
   </thead>
   <tbody>
